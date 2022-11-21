@@ -8,6 +8,7 @@ export default {
 </script>
 <style>
 .btn {
+  max-width: 130px;
   cursor: pointer;
   background-color: #00a9a4;
   color: #fff;
@@ -20,7 +21,7 @@ export default {
   text-align: center;
   transition: all 0.7s ease-in-out;
   border: none;
-  padding: 13px 35px 15px;
+  padding: 5px;
   border-radius: 6px;
 }
 .btn:hover {

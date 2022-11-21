@@ -24,6 +24,7 @@ export default {
     :key="machine.id"
     :machine="machine"
     :tags="this.$store.getters.getMachineTypesById(machine.typeId)"
+    :address="this.$store.getters.getMachinesAddressById(machine.tradePointId)"
   />
 </template>
 

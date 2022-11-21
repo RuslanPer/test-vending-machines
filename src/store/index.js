@@ -80,6 +80,9 @@ const store = createStore({
     getMachineTypesById: (state) => (typeId) => {
       return state.machineTypes.find((el) => el.id === typeId).tags;
     },
+    getMachinesAddressById: (state) => (tradePointId) => {
+      return state.tradePoints.find((el) => el.id === tradePointId).location;
+    },
   },
 });
 

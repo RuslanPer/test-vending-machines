@@ -1,13 +1,12 @@
 <template>
   <div class="machine">
-    <div>
-      <div>
-        <h2>#{{ machine.serialNumber }}</h2>
-        <div :key="key" v-for="(tag, key) in tags">{{ tag }}</div>
+    <div class="machineText">
+      <div class="machineHead">
+        <h2 class="machineSerial">#{{ machine.serialNumber }}</h2>
+        <TagVue :key="key" v-for="(tag, key) in tags" :title="tag" />
       </div>
-
-      <h4>Адрес</h4>
-      <span>Этаж: {{ machine.floor }}</span>
+      <h4 class="machineAddress">{{ address.address }}</h4>
+      <span class="machineFloor">Этаж: {{ machine.floor }}</span>
       <ButtonVue title="Время работы" />
     </div>
     <div>Img</div>
@@ -15,12 +14,14 @@
 </template>
 <script>
 import ButtonVue from "./Button.vue";
+import TagVue from "./Tag.vue";
 
 export default {
   components: {
     ButtonVue,
+    TagVue,
   },
-  props: ["machine", "tags"],
+  props: ["machine", "tags", "address"],
 };
 </script>
 <style>
@@ -31,5 +32,35 @@ export default {
   padding: 25px;
   margin: 20px 0;
   display: flex;
+  justify-content: space-between;
+}
+
+.machineText {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.machineHead {
+  display: flex;
+  margin-bottom: 10px;
+  column-gap: 10px;
+}
+
+.machineSerial {
+  margin-right: 10px;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.machineAddress {
+  font-size: 17px;
+  font-weight: 600;
+  color: #010647;
+}
+
+.machineFloor {
+  font-size: 16px;
+  color: #666;
 }
 </style>
