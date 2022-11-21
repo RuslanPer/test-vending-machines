@@ -1,6 +1,6 @@
 <template>
-  <div class="modal-overlay">
-    <div class="modal">
+  <div class="modal-overlay" @click="$emit('close-modal')">
+    <div class="modal" @click.stop>
       <h6 class="modal-title">Время работы</h6>
       <p class="modal-subtitle">Открыто до: {{ nowDayWorkingTime }}</p>
       <ul class="modal-list">
