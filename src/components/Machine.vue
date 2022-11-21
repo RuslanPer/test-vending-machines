@@ -7,21 +7,29 @@
       </div>
       <h4 class="machineAddress">{{ address.address }}</h4>
       <span class="machineFloor">Этаж: {{ machine.floor }}</span>
-      <ButtonVue title="Время работы" />
+      <ButtonVue @click="showModal = true" title="Время работы" />
     </div>
     <div>Img</div>
   </div>
+  <Modal v-show="showModal" @close-modal="showModal = false" :times="times" />
 </template>
 <script>
 import ButtonVue from "./Button.vue";
 import TagVue from "./Tag.vue";
+import Modal from "./Modal.vue";
 
 export default {
   components: {
     ButtonVue,
     TagVue,
+    Modal,
   },
-  props: ["machine", "tags", "address"],
+  props: ["machine", "tags", "address", "times"],
+  data() {
+    return {
+      showModal: false,
+    };
+  },
 };
 </script>
 <style>

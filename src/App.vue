@@ -1,13 +1,3 @@
-<script>
-import Machine from "./components/Machine.vue";
-
-export default {
-  components: {
-    Machine,
-  },
-};
-</script>
-
 <template>
   <div class="titleBlock">
     <h1 class="title">Список машин</h1>
@@ -25,8 +15,22 @@ export default {
     :machine="machine"
     :tags="this.$store.getters.getMachineTypesById(machine.typeId)"
     :address="this.$store.getters.getMachinesAddressById(machine.tradePointId)"
+    :times="
+      this.$store.getters.getMachinesWorkingTimeById(machine.tradePointId)
+    "
+    @open-modal="showModal = true"
   />
 </template>
+
+<script>
+import Machine from "./components/Machine.vue";
+
+export default {
+  components: {
+    Machine,
+  },
+};
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&display=swap");

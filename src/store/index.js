@@ -83,6 +83,9 @@ const store = createStore({
     getMachinesAddressById: (state) => (tradePointId) => {
       return state.tradePoints.find((el) => el.id === tradePointId).location;
     },
+    getMachinesWorkingTimeById: (state) => (tradePointId) => {
+      return state.tradePoints.find((el) => el.id === tradePointId).workingTime;
+    },
   },
 });
 
