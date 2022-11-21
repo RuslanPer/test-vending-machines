@@ -1,39 +1,51 @@
 <template>
-  <div class="titleBlock">
-    <h1 class="title">Список машин</h1>
-    <div class="searchBox">
-      <input
-        v-on:keyup.enter="search(searchValue)"
-        v-model="searchValue"
-        class="searchInput"
-        type="text"
-        placeholder="Поиск по номеру"
-      />
-      <button class="searchBtn" @click="search(searchValue)">
-        <img src="./assets/icons/search.svg" />
-      </button>
+  <template v-if="getIsLoading"><Preloader /></template>
+  <template v-else>
+    <div class="titleBlock">
+      <h1 class="title">Список машин</h1>
+      <div class="searchBox">
+        <input
+          v-on:keyup.enter="search(searchValue)"
+          v-model="searchValue"
+          class="searchInput"
+          type="text"
+          placeholder="Поиск по номеру"
+        />
+        <button class="searchBtn" @click="search(searchValue)">
+          <img src="./assets/icons/search.svg" />
+        </button>
+      </div>
     </div>
-  </div>
 
-  <Machine
-    v-for="machine in sortedMachines"
-    :key="machine.id"
-    :machine="machine"
-    :address="this.$store.getters.getMachinesAddressById(machine.tradePointId)"
-    :times="
-      this.$store.getters.getMachinesWorkingTimeById(machine.tradePointId)
-    "
-    @open-modal="showModal = true"
-  />
+    <template v-if="sortedMachines.length > 0">
+      <Machine
+        v-for="machine in sortedMachines"
+        :key="machine.id"
+        :machine="machine"
+        :address="
+          this.$store.getters.getMachinesAddressById(machine.tradePointId)
+        "
+        :times="
+          this.$store.getters.getMachinesWorkingTimeById(machine.tradePointId)
+        "
+        @open-modal="showModal = true"
+      />
+    </template>
+    <template v-else>
+      <h3>Простите, по вашему запросу машин сейчас нет.</h3>
+    </template>
+  </template>
 </template>
 
 <script>
 import Machine from "./components/Machine.vue";
+import Preloader from "./components/Preloader.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
     Machine,
+    Preloader,
   },
   data() {
     return {
@@ -42,7 +54,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getMachines", "getSearchValue"]),
+    ...mapGetters(["getMachines", "getSearchValue", "getIsLoading"]),
   },
   methods: {
     ...mapActions([
@@ -50,6 +62,7 @@ export default {
       "GET_TRADE_POINTS_FROM_API",
       "GET_MACHINE_TYPES_FROM_API",
       "GET_SEARCH_VALUE_TO_VUEX",
+      "GET_IS_LOADING_TO_VUEX",
     ]),
     search(value) {
       this.GET_SEARCH_VALUE_TO_VUEX(value);
@@ -66,13 +79,16 @@ export default {
     },
   },
   mounted() {
-    this.GET_MACHINES_FROM_API().then((res) => {
-      if (res.data) {
+    Promise.all([
+      this.GET_MACHINES_FROM_API(),
+      this.GET_TRADE_POINTS_FROM_API(),
+      this.GET_MACHINE_TYPES_FROM_API(),
+    ]).then((res) => {
+      if (res) {
         this.sortMachinesBySearchValue(this.getSearchValue);
+        this.GET_IS_LOADING_TO_VUEX(false);
       }
     });
-    this.GET_TRADE_POINTS_FROM_API();
-    this.GET_MACHINE_TYPES_FROM_API();
   },
   watch: {
     getSearchValue() {

@@ -4,6 +4,7 @@ import { MachineService } from "../services/machine.service";
 
 const store = createStore({
   state: {
+    isLoading: true,
     searchValue: "",
     machines: [],
     tradePoints: [],
@@ -22,8 +23,14 @@ const store = createStore({
     SET_MACHINE_TYPES_TO_STATE: (state, types) => {
       state.machineTypes = types;
     },
+    SET_IS_LOADING_TO_VUEX: (state, value) => {
+      state.isLoading = value;
+    },
   },
   actions: {
+    GET_IS_LOADING_TO_VUEX({ commit }, value) {
+      commit("SET_IS_LOADING_TO_VUEX", value);
+    },
     GET_SEARCH_VALUE_TO_VUEX({ commit }, value) {
       commit("SET_SEARCH_VALUE_TO_VUEX", value);
     },
@@ -62,6 +69,9 @@ const store = createStore({
     },
   },
   getters: {
+    getIsLoading(state) {
+      return state.isLoading;
+    },
     getSearchValue(state) {
       return state.searchValue;
     },
