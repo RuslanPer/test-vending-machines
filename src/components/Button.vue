@@ -1,5 +1,5 @@
 <template>
-  <button class="btn">{{ title }}</button>
+  <button class="btn" @click="$emit('open-modal')">{{ title }}</button>
 </template>
 <script>
 export default {

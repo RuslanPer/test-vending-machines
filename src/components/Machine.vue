@@ -7,9 +7,14 @@
       </div>
       <h4 class="machineAddress">{{ address.address }}</h4>
       <span class="machineFloor">Этаж: {{ machine.floor }}</span>
-      <ButtonVue @click="showModal = true" title="Время работы" />
+      <ButtonVue @open-modal="showModal = true" title="Время работы" />
     </div>
-    <div>Img</div>
+    <div class="machineMap">
+      <img
+        :src="`http://static.maps.2gis.com/1.0?zoom=17&size=500,350&markers=${address.longitude},${address.latitude}`"
+        alt="map"
+      />
+    </div>
   </div>
   <Modal v-show="showModal" @close-modal="showModal = false" :times="times" />
 </template>
@@ -24,6 +29,7 @@ export default {
     TagVue,
     Modal,
   },
+  emits: ["close-modal", "open-modal"],
   props: ["machine", "tags", "address", "times"],
   data() {
     return {
@@ -47,6 +53,7 @@ export default {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+  justify-content: space-between;
 }
 
 .machineHead {
@@ -70,5 +77,13 @@ export default {
 .machineFloor {
   font-size: 16px;
   color: #666;
+}
+
+.machineMap {
+  width: 250px;
+}
+
+.machineMap img {
+  max-width: 100%;
 }
 </style>

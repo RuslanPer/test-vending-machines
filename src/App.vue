@@ -2,18 +2,23 @@
   <div class="titleBlock">
     <h1 class="title">Список машин</h1>
     <div class="searchBox">
-      <input class="searchInput" type="text" placeholder="Search" />
-      <button class="searchBtn">
+      <input
+        v-on:keyup.enter="search(searchValue)"
+        v-model="searchValue"
+        class="searchInput"
+        type="text"
+        placeholder="Поиск по номеру"
+      />
+      <button class="searchBtn" @click="search(searchValue)">
         <img src="./assets/icons/search.svg" />
       </button>
     </div>
   </div>
 
   <Machine
-    v-for="machine in this.$store.state.machines"
+    v-for="machine in sortedMachines"
     :key="machine.id"
     :machine="machine"
-    :tags="this.$store.getters.getMachineTypesById(machine.typeId)"
     :address="this.$store.getters.getMachinesAddressById(machine.tradePointId)"
     :times="
       this.$store.getters.getMachinesWorkingTimeById(machine.tradePointId)
@@ -24,10 +29,55 @@
 
 <script>
 import Machine from "./components/Machine.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
     Machine,
+  },
+  data() {
+    return {
+      searchValue: "",
+      sortedMachines: [],
+    };
+  },
+  computed: {
+    ...mapGetters(["getMachines", "getSearchValue"]),
+  },
+  methods: {
+    ...mapActions([
+      "GET_MACHINES_FROM_API",
+      "GET_TRADE_POINTS_FROM_API",
+      "GET_MACHINE_TYPES_FROM_API",
+      "GET_SEARCH_VALUE_TO_VUEX",
+    ]),
+    search(value) {
+      this.GET_SEARCH_VALUE_TO_VUEX(value);
+    },
+    sortMachinesBySearchValue(value) {
+      this.sortedMachines = [...this.getMachines];
+      if (value) {
+        this.sortedMachines = this.getMachines.filter(function (item) {
+          return item.serialNumber.toLowerCase().includes(value.toLowerCase());
+        });
+      } else {
+        this.sortedMachines = this.getMachines;
+      }
+    },
+  },
+  mounted() {
+    this.GET_MACHINES_FROM_API().then((res) => {
+      if (res.data) {
+        this.sortMachinesBySearchValue(this.getSearchValue);
+      }
+    });
+    this.GET_TRADE_POINTS_FROM_API();
+    this.GET_MACHINE_TYPES_FROM_API();
+  },
+  watch: {
+    getSearchValue() {
+      this.sortMachinesBySearchValue(this.getSearchValue);
+    },
   },
 };
 </script>

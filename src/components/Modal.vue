@@ -44,6 +44,15 @@ export default {
   data() {
     return {
       isActive: true,
+      workingTime: {
+        Понедельник: "",
+        Вторник: "",
+        Среда: "",
+        Четверг: "",
+        Пятница: "",
+        Суббота: "",
+        Воскресенье: "",
+      },
     };
   },
   computed: {
