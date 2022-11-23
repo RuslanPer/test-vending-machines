@@ -2,21 +2,31 @@
   <div class="machine">
     <div class="machine-text">
       <div class="machine-head">
-        <h2 class="machine-serial">#{{ machine.serialNumber }}</h2>
-        <TagVue :key="key" v-for="(tag, key) in tags" :code="tag" />
+        <h2 class="machine-serial">#{{ machine_data.serialNumber }}</h2>
+        <TagVue
+          :key="key"
+          v-for="(tag, key) in machine_data.machineTypes.tags"
+          :code="tag"
+        />
       </div>
-      <h4 class="machine-address">{{ address.address }}</h4>
-      <span class="machine-floor">Этаж: {{ machine.floor }}</span>
+      <h4 class="machine-address">
+        {{ machine_data.tradePoint.location.address }}
+      </h4>
+      <span class="machine-floor">Этаж: {{ machine_data.floor }}</span>
       <ButtonVue @open-modal="showModal = true" title="Время работы" />
     </div>
     <div class="machine-map">
       <img
-        :src="`http://static.maps.2gis.com/1.0?zoom=17&size=500,350&markers=${address.longitude},${address.latitude}`"
+        :src="`http://static.maps.2gis.com/1.0?zoom=17&size=500,350&markers=${machine_data.tradePoint.location.longitude},${machine_data.tradePoint.location.latitude}`"
         alt="map"
       />
     </div>
   </div>
-  <Modal v-show="showModal" @close-modal="showModal = false" :times="times" />
+  <Modal
+    v-show="showModal"
+    @close-modal="showModal = false"
+    :times="machine_data.tradePoint.workingTime"
+  />
 </template>
 <script>
 import ButtonVue from "./Button.vue";
@@ -30,7 +40,14 @@ export default {
     Modal,
   },
   emits: ["close-modal", "open-modal"],
-  props: ["machine", "tags", "address", "times"],
+  props: {
+    machine_data: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       showModal: false,

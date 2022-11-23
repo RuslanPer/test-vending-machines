@@ -21,14 +21,7 @@
       <Machine
         v-for="machine in sortedMachines"
         :key="machine.id"
-        :machine="machine"
-        :address="
-          this.$store.getters.getMachinesAddressById(machine.tradePointId)
-        "
-        :times="
-          this.$store.getters.getMachinesWorkingTimeById(machine.tradePointId)
-        "
-        :tags="this.$store.getters.getMachineTypesById(machine.typeId)"
+        :machine_data="machine"
         @open-modal="showModal = true"
       />
     </template>
@@ -62,11 +55,11 @@ export default {
       "GET_MACHINES_FROM_API",
       "GET_TRADE_POINTS_FROM_API",
       "GET_MACHINE_TYPES_FROM_API",
-      "GET_SEARCH_VALUE_TO_VUEX",
-      "GET_IS_LOADING_TO_VUEX",
+      "GET_SEARCH_VALUE_TO_STATE",
+      "GET_IS_LOADING_TO_STATE",
     ]),
     search(value) {
-      this.GET_SEARCH_VALUE_TO_VUEX(value);
+      this.GET_SEARCH_VALUE_TO_STATE(value);
     },
     sortMachinesBySearchValue(value) {
       this.sortedMachines = [...this.getMachines];
@@ -81,15 +74,18 @@ export default {
   },
   mounted() {
     Promise.all([
-      this.GET_MACHINES_FROM_API(),
       this.GET_TRADE_POINTS_FROM_API(),
       this.GET_MACHINE_TYPES_FROM_API(),
-    ]).then((res) => {
-      if (res) {
-        this.sortMachinesBySearchValue(this.getSearchValue);
-        this.GET_IS_LOADING_TO_VUEX(false);
-      }
-    });
+    ])
+      .then(() => {
+        return this.GET_MACHINES_FROM_API();
+      })
+      .then((res) => {
+        if (res) {
+          this.sortMachinesBySearchValue(this.getSearchValue);
+          this.GET_IS_LOADING_TO_STATE(false);
+        }
+      });
   },
   watch: {
     getSearchValue() {

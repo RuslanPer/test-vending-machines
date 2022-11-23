@@ -11,11 +11,12 @@ const store = createStore({
     machineTypes: [],
   },
   mutations: {
-    SET_SEARCH_VALUE_TO_VUEX: (state, value) => {
-      state.searchValue = value;
-    },
     SET_MACHINES_TO_STATE: (state, machines) => {
-      state.machines = machines;
+      state.machines = machines.map((m) => ({
+        ...m,
+        tradePoint: state.tradePoints.find((tp) => tp.id === m.tradePointId),
+        machineTypes: state.machineTypes.find((mt) => mt.id === m.typeId),
+      }));
     },
     SET_TRADE_POINTS_TO_STATE: (state, points) => {
       state.tradePoints = points;
@@ -23,16 +24,19 @@ const store = createStore({
     SET_MACHINE_TYPES_TO_STATE: (state, types) => {
       state.machineTypes = types;
     },
-    SET_IS_LOADING_TO_VUEX: (state, value) => {
+    SET_SEARCH_VALUE_TO_STATE: (state, value) => {
+      state.searchValue = value;
+    },
+    SET_IS_LOADING_TO_STATE: (state, value) => {
       state.isLoading = value;
     },
   },
   actions: {
-    GET_IS_LOADING_TO_VUEX({ commit }, value) {
-      commit("SET_IS_LOADING_TO_VUEX", value);
+    GET_IS_LOADING_TO_STATE({ commit }, value) {
+      commit("SET_IS_LOADING_TO_STATE", value);
     },
-    GET_SEARCH_VALUE_TO_VUEX({ commit }, value) {
-      commit("SET_SEARCH_VALUE_TO_VUEX", value);
+    GET_SEARCH_VALUE_TO_STATE({ commit }, value) {
+      commit("SET_SEARCH_VALUE_TO_STATE", value);
     },
     GET_MACHINES_FROM_API({ commit }) {
       return MachineService.getAllMachines()
@@ -77,15 +81,6 @@ const store = createStore({
     },
     getMachines(state) {
       return state.machines;
-    },
-    getMachineTypesById: (state) => (typeId) => {
-      return state.machineTypes.find((el) => el.id === typeId).tags;
-    },
-    getMachinesAddressById: (state) => (tradePointId) => {
-      return state.tradePoints.find((el) => el.id === tradePointId).location;
-    },
-    getMachinesWorkingTimeById: (state) => (tradePointId) => {
-      return state.tradePoints.find((el) => el.id === tradePointId).workingTime;
     },
   },
 });
