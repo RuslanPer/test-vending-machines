@@ -41,7 +41,7 @@ import {
   GET_MACHINES_FROM_API,
   GET_TRADE_POINTS_FROM_API,
   GET_MACHINE_TYPES_FROM_API,
-} from "./store/actions-types";
+} from "./store/actions/actions-types";
 
 export default {
   components: {

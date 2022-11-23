@@ -14,7 +14,14 @@ export default {
   components: {
     WorkingTimes,
   },
-  props: ["times"],
+  props: {
+    times: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       isActive: true,

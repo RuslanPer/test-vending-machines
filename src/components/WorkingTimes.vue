@@ -17,7 +17,14 @@
 </template>
 <script>
 export default {
-  props: ["times"],
+  props: {
+    times: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       daysWeek: [

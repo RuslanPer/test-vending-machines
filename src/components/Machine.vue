@@ -17,7 +17,7 @@
     </div>
     <div class="machine-map">
       <img
-        :src="`http://static.maps.2gis.com/1.0?zoom=17&size=500,350&markers=${machine_data.tradePoint.location.longitude},${machine_data.tradePoint.location.latitude}`"
+        :src="`${this.mapURL}${machine_data.tradePoint.location.longitude},${machine_data.tradePoint.location.latitude}`"
         alt="map"
       />
     </div>
@@ -52,6 +52,7 @@ export default {
   data() {
     return {
       showModal: false,
+      mapURL: "http://static.maps.2gis.com/1.0?zoom=17&size=500,350&markers=",
     };
   },
 };
