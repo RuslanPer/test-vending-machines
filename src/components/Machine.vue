@@ -1,15 +1,15 @@
 <template>
   <div class="machine">
-    <div class="machineText">
-      <div class="machineHead">
-        <h2 class="machineSerial">#{{ machine.serialNumber }}</h2>
+    <div class="machine-text">
+      <div class="machine-head">
+        <h2 class="machine-serial">#{{ machine.serialNumber }}</h2>
         <TagVue :key="key" v-for="(tag, key) in tags" :title="tag" />
       </div>
-      <h4 class="machineAddress">{{ address.address }}</h4>
-      <span class="machineFloor">Этаж: {{ machine.floor }}</span>
+      <h4 class="machine-address">{{ address.address }}</h4>
+      <span class="machine-floor">Этаж: {{ machine.floor }}</span>
       <ButtonVue @open-modal="showModal = true" title="Время работы" />
     </div>
-    <div class="machineMap">
+    <div class="machine-map">
       <img
         :src="`http://static.maps.2gis.com/1.0?zoom=17&size=500,350&markers=${address.longitude},${address.latitude}`"
         alt="map"
@@ -49,41 +49,41 @@ export default {
   justify-content: space-between;
 }
 
-.machineText {
+.machine-text {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
   justify-content: space-between;
 }
 
-.machineHead {
+.machine-head {
   display: flex;
   margin-bottom: 10px;
   column-gap: 10px;
 }
 
-.machineSerial {
+.machine-serial {
   margin-right: 10px;
   font-weight: 700;
   font-size: 22px;
 }
 
-.machineAddress {
+.machine-address {
   font-size: 17px;
   font-weight: 600;
   color: #010647;
 }
 
-.machineFloor {
+.machine-floor {
   font-size: 16px;
   color: #666;
 }
 
-.machineMap {
+.machine-map {
   width: 250px;
 }
 
-.machineMap img {
+.machine-map img {
   max-width: 100%;
 }
 </style>

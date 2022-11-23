@@ -74,8 +74,8 @@ This template should help get you started developing with Vue 3 in Vite.
 
 <div style="text-align: center">
 
-![example](src/assets/screen_1.png)
-![example](src/assets/screen_2.png)
+![example](src/assets/images/screen_1.png)
+![example](src/assets/images/screen_2.png)
 
 </div>
 
