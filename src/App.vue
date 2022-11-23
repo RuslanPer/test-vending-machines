@@ -1,17 +1,17 @@
 <template>
   <template v-if="getIsLoading"><Preloader /></template>
   <template v-else>
-    <div class="titleBlock">
+    <div class="title-block">
       <h1 class="title">Список машин</h1>
-      <div class="searchBox">
+      <div class="search-box">
         <input
           v-on:keyup.enter="search(searchValue)"
           v-model="searchValue"
-          class="searchInput"
+          class="search-input"
           type="text"
           placeholder="Поиск по номеру"
         />
-        <button class="searchBtn" @click="search(searchValue)">
+        <button class="searc-btn" @click="search(searchValue)">
           <img src="./assets/icons/search.svg" />
         </button>
       </div>
@@ -108,7 +108,7 @@ export default {
   margin: 50px auto;
 }
 
-.titleBlock {
+.title-block {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -120,11 +120,11 @@ export default {
   font-weight: 700;
 }
 
-.searchBox {
+.search-box {
   position: relative;
 }
 
-.searchInput {
+.search-input {
   outline: none;
   border: none;
   padding: 5px 10px 5px 0;
@@ -133,7 +133,7 @@ export default {
   background-color: transparent;
 }
 
-.searchBtn {
+.search-btn {
   cursor: pointer;
   position: absolute;
   top: 4px;
@@ -144,7 +144,7 @@ export default {
   border: none;
 }
 
-.searchBtn img {
+.search-btn img {
   max-width: 20px;
 }
 </style>
