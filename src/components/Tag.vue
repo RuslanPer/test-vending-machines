@@ -1,17 +1,35 @@
 <template>
-  <div v-if="title === 'coffee'" class="tag tag-green">Кофе</div>
-  <div v-else-if="title === 'only_non_cash_payments'" class="tag tag-blue">
-    Безнал
-  </div>
-  <div v-else-if="title === 'cashier'" class="tag tag-blue">Кассир</div>
-  <div v-else-if="title === 'hot_chocolate'" class="tag tag-green">
-    Гор. шоколад
-  </div>
-  <div v-else-if="title === 'juices'" class="tag tag-yellow">Соки</div>
+  <div :class="`tag ${types[code].class}`">{{ types[code].title }}</div>
 </template>
 <script>
 export default {
-  props: ["title"],
+  props: ["code"],
+  data() {
+    return {
+      types: {
+        coffee: {
+          class: "tag-green",
+          title: "Кофе",
+        },
+        hot_chocolate: {
+          class: "tag-green",
+          title: "Гор. шоколад",
+        },
+        only_non_cash_payments: {
+          class: "tag-blue",
+          title: "Безнал",
+        },
+        cashier: {
+          class: "tag-blue",
+          title: "Кассир",
+        },
+        juices: {
+          class: "tag-yellow",
+          title: "Соки",
+        },
+      },
+    };
+  },
 };
 </script>
 <style>

@@ -11,7 +11,7 @@
           type="text"
           placeholder="Поиск по номеру"
         />
-        <button class="searc-btn" @click="search(searchValue)">
+        <button class="search-btn" @click="search(searchValue)">
           <img src="./assets/icons/search.svg" />
         </button>
       </div>
@@ -28,6 +28,7 @@
         :times="
           this.$store.getters.getMachinesWorkingTimeById(machine.tradePointId)
         "
+        :tags="this.$store.getters.getMachineTypesById(machine.typeId)"
         @open-modal="showModal = true"
       />
     </template>

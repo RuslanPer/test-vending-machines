@@ -3,7 +3,7 @@
     <div class="machine-text">
       <div class="machine-head">
         <h2 class="machine-serial">#{{ machine.serialNumber }}</h2>
-        <TagVue :key="key" v-for="(tag, key) in tags" :title="tag" />
+        <TagVue :key="key" v-for="(tag, key) in tags" :code="tag" />
       </div>
       <h4 class="machine-address">{{ address.address }}</h4>
       <span class="machine-floor">Этаж: {{ machine.floor }}</span>
