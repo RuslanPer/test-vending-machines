@@ -88,7 +88,7 @@ export default {
 .machine-address {
   font-size: 17px;
   font-weight: 600;
-  color: #010647;
+  color: var(--text-color);
 }
 
 .machine-floor {
@@ -102,5 +102,17 @@ export default {
 
 .machine-map img {
   max-width: 100%;
+}
+
+@media screen and (max-width: 640px) {
+  .machine {
+    flex-direction: column;
+    row-gap: 15px;
+  }
+
+  .machine-map {
+    align-self: center;
+    max-width: 300px;
+  }
 }
 </style>

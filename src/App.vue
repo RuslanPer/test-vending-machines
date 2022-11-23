@@ -104,12 +104,12 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&display=swap");
-@import "./assets/styles/reset.css";
 
 #app {
-  font-family: "Barlow", sans-serif;
+  font-family: var(--body-font);
   max-width: 800px;
   margin: 50px auto;
+  padding: 15px;
 }
 
 .title-block {
@@ -150,5 +150,25 @@ export default {
 
 .search-btn img {
   max-width: 20px;
+}
+
+@media screen and (max-width: 576px) {
+  #app {
+    margin: 30px auto;
+  }
+  .title-block {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    row-gap: 20px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .search-box {
+    width: 100%;
+  }
+  .search-input {
+    width: 100%;
+  }
 }
 </style>

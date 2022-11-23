@@ -141,11 +141,11 @@ export default {
 }
 
 .btn-modal-close:hover {
-  color: #00a9a4;
+  color: var(--first-color);
 }
 
 .active {
-  color: #00a9a4;
+  color: var(--first-color);
   font-weight: 600;
 }
 </style>

@@ -10,10 +10,10 @@ export default {
 .btn {
   max-width: 130px;
   cursor: pointer;
-  background-color: #00a9a4;
+  background-color: var(--first-color);
   color: #fff;
   font-size: 16px;
-  font-family: "Barlow", sans-serif;
+  font-family: var(--body-font);
   display: inline-block;
   line-height: 26px;
   font-weight: 400;
@@ -25,6 +25,6 @@ export default {
   border-radius: 6px;
 }
 .btn:hover {
-  background-color: #010647;
+  background-color: var(--text-color);
 }
 </style>
