@@ -1,80 +1,24 @@
 <template>
   <div class="modal-overlay" @click="$emit('close-modal')">
     <div class="modal" @click.stop>
-      <h6 class="modal-title">Время работы</h6>
-      <p class="modal-subtitle">Открыто до: {{ nowDayWorkingTime }}</p>
-      <ul class="modal-list">
-        <li class="modal-item" :class="['mon' === nowDay ? 'active' : '']">
-          <span>Понедельник</span>
-          <span>{{ changedTimes.mon }}</span>
-        </li>
-        <li class="modal-item" :class="['tue' === nowDay ? 'active' : '']">
-          <span>Вторник</span>
-          <span>{{ changedTimes.tue }}</span>
-        </li>
-        <li class="modal-item" :class="['wed' === nowDay ? 'active' : '']">
-          <span>Среда</span>
-          <span>{{ changedTimes.wed }}</span>
-        </li>
-        <li class="modal-item" :class="['thu' === nowDay ? 'active' : '']">
-          <span>Четверг</span>
-          <span>{{ changedTimes.thu }}</span>
-        </li>
-        <li class="modal-item" :class="['fri' === nowDay ? 'active' : '']">
-          <span>Пятница</span>
-          <span>{{ changedTimes.fri }}</span>
-        </li>
-        <li class="modal-item" :class="['sat' === nowDay ? 'active' : '']">
-          <span>Суббота</span>
-          <span>{{ changedTimes.sat }}</span>
-        </li>
-        <li class="modal-item" :class="['sun' === nowDay ? 'active' : '']">
-          <span>Воскресенье</span>
-          <span>{{ changedTimes.sun }}</span>
-        </li>
-      </ul>
+      <WorkingTimes :times="times" />
       <button class="btn-modal-close" @click="$emit('close-modal')">✖</button>
     </div>
   </div>
 </template>
 
 <script>
+import WorkingTimes from "./WorkingTimes.vue";
+
 export default {
+  components: {
+    WorkingTimes,
+  },
   props: ["times"],
   data() {
     return {
       isActive: true,
-      workingTime: {
-        Понедельник: "",
-        Вторник: "",
-        Среда: "",
-        Четверг: "",
-        Пятница: "",
-        Суббота: "",
-        Воскресенье: "",
-      },
     };
-  },
-  computed: {
-    changedTimes: function () {
-      let obj = { ...this.times };
-
-      for (let key in obj) {
-        if (obj[key]) {
-          obj[key] = obj[key].replace(";", " - ");
-        } else {
-          obj[key] = "Выходной";
-        }
-      }
-
-      return obj;
-    },
-    nowDay: function () {
-      return Object.keys(this.changedTimes)[new Date().getDay() - 1];
-    },
-    nowDayWorkingTime: function () {
-      return this.changedTimes[this.nowDay].slice(8);
-    },
   },
 };
 </script>
@@ -101,32 +45,6 @@ export default {
   border-radius: 20px;
 }
 
-.modal-title {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.modal-subtitle {
-  font-size: 16px;
-  color: #666;
-  padding-bottom: 7px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid rgba(1, 1, 1, 0.1);
-}
-
-.modal-list {
-  display: flex;
-  flex-direction: column;
-  row-gap: 15px;
-}
-
-.modal-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .btn-modal-close {
   position: absolute;
   top: 10px;
@@ -144,8 +62,15 @@ export default {
   color: var(--first-color);
 }
 
-.active {
-  color: var(--first-color);
-  font-weight: 600;
+@media screen and (max-width: 576px) {
+  .modal-overlay {
+    padding: 20px;
+    align-items: center;
+  }
+  .modal {
+    margin-top: 0;
+    width: 100%;
+    padding: 20px;
+  }
 }
 </style>

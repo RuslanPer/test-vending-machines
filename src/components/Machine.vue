@@ -28,6 +28,7 @@
     :times="machine_data.tradePoint.workingTime"
   />
 </template>
+
 <script>
 import ButtonVue from "./Button.vue";
 import TagVue from "./Tag.vue";
@@ -55,6 +56,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .machine {
   background-color: #fff;
