@@ -7,6 +7,13 @@ import {
   SET_SEARCH_VALUE_TO_STATE,
   SET_IS_LOADING_TO_STATE,
 } from "./mutation-types";
+import {
+  GET_IS_LOADING_TO_STATE,
+  GET_SEARCH_VALUE_TO_STATE,
+  GET_MACHINES_FROM_API,
+  GET_TRADE_POINTS_FROM_API,
+  GET_MACHINE_TYPES_FROM_API,
+} from "./actions-types";
 
 const store = createStore({
   state: {
@@ -24,27 +31,27 @@ const store = createStore({
         machineTypes: state.machineTypes.find((mt) => mt.id === m.typeId),
       }));
     },
-    [SET_TRADE_POINTS_TO_STATE]: (state, points) => {
+    [SET_TRADE_POINTS_TO_STATE](state, points) {
       state.tradePoints = points;
     },
-    [SET_MACHINE_TYPES_TO_STATE]: (state, types) => {
+    [SET_MACHINE_TYPES_TO_STATE](state, types) {
       state.machineTypes = types;
     },
-    [SET_SEARCH_VALUE_TO_STATE]: (state, value) => {
+    [SET_SEARCH_VALUE_TO_STATE](state, value) {
       state.searchValue = value;
     },
-    [SET_IS_LOADING_TO_STATE]: (state, value) => {
+    [SET_IS_LOADING_TO_STATE](state, value) {
       state.isLoading = value;
     },
   },
   actions: {
-    GET_IS_LOADING_TO_STATE({ commit }, value) {
+    [GET_IS_LOADING_TO_STATE]({ commit }, value) {
       commit(SET_IS_LOADING_TO_STATE, value);
     },
-    GET_SEARCH_VALUE_TO_STATE({ commit }, value) {
+    [GET_SEARCH_VALUE_TO_STATE]({ commit }, value) {
       commit(SET_SEARCH_VALUE_TO_STATE, value);
     },
-    GET_MACHINES_FROM_API({ commit }) {
+    [GET_MACHINES_FROM_API]({ commit }) {
       return MachineService.getAllMachines()
         .then((machines) => {
           commit(SET_MACHINES_TO_STATE, machines.data);
@@ -55,7 +62,7 @@ const store = createStore({
           return error;
         });
     },
-    GET_TRADE_POINTS_FROM_API({ commit }) {
+    [GET_TRADE_POINTS_FROM_API]({ commit }) {
       return MachineService.getAllTradePoints()
         .then((points) => {
           commit(SET_TRADE_POINTS_TO_STATE, points.data);
@@ -66,7 +73,7 @@ const store = createStore({
           return error;
         });
     },
-    GET_MACHINE_TYPES_FROM_API({ commit }) {
+    [GET_MACHINE_TYPES_FROM_API]({ commit }) {
       return MachineService.getAllMachineTypes()
         .then((types) => {
           commit(SET_MACHINE_TYPES_TO_STATE, types.data);

@@ -12,7 +12,7 @@
           placeholder="Поиск по номеру"
         />
         <button class="search-btn" @click="search(searchValue)">
-          <img src="./assets/icons/search.svg" />
+          <img src="@/assets/icons/search.svg" />
         </button>
       </div>
     </div>
@@ -35,6 +35,13 @@
 import Machine from "./components/Machine.vue";
 import Preloader from "./components/Preloader.vue";
 import { mapActions, mapGetters } from "vuex";
+import {
+  GET_IS_LOADING_TO_STATE,
+  GET_SEARCH_VALUE_TO_STATE,
+  GET_MACHINES_FROM_API,
+  GET_TRADE_POINTS_FROM_API,
+  GET_MACHINE_TYPES_FROM_API,
+} from "./store/actions-types";
 
 export default {
   components: {
@@ -52,11 +59,11 @@ export default {
   },
   methods: {
     ...mapActions([
-      "GET_MACHINES_FROM_API",
-      "GET_TRADE_POINTS_FROM_API",
-      "GET_MACHINE_TYPES_FROM_API",
-      "GET_SEARCH_VALUE_TO_STATE",
-      "GET_IS_LOADING_TO_STATE",
+      GET_MACHINES_FROM_API,
+      GET_TRADE_POINTS_FROM_API,
+      GET_MACHINE_TYPES_FROM_API,
+      GET_SEARCH_VALUE_TO_STATE,
+      GET_IS_LOADING_TO_STATE,
     ]),
     search(value) {
       this.GET_SEARCH_VALUE_TO_STATE(value);
